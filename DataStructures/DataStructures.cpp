@@ -7,9 +7,6 @@ using namespace std;
 
 int main()
 {
-	//DLinkedList<int> list;
-	//list.push_front(3);
-
 	cout << "*** STL List ***" << endl << endl;
 
 	list<int> l;

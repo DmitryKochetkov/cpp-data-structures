@@ -12,6 +12,24 @@ public:
 		head = nullptr;
 	}
 
+	~DLinkedList() {
+		//std::cout << "Destructor for DLinkedList called" << std::endl;
+		
+		//Option 1
+		
+		/*
+		while (head) {
+			ListNode<T>* temp = head;
+			head = head->next;
+			delete temp;
+		}
+		*/
+		
+
+		//Option 2 (requires recursive destructor for ListNode)
+		//delete head;
+	}
+
 	size_t get_size() { return size; }
 	
 	const T & operator[](unsigned index) {
@@ -32,20 +50,40 @@ public:
 
 	void push_back(const T & data) {
 		ListNode<T>* temp = new ListNode<T>(data);
+
 		if (head == nullptr) {
 			head = temp;
+			head->next = head; //cycle. review!
+			head->prev = head; //cycle. review!
 		}
-		else {
+		else {	
+			// implementation with no tail
+
+			/*
 			ListNode<T>* current = head;
 			while (current->next != nullptr)
 				current = current->next;
-			current->next = temp;
+				temp->prev = current;
+				temp->next = head;
+			*/ 
+
+			//implementation with tail ( O(1) )
+
+
+			temp->prev = tail; //here we mean an old tail
+			tail->prev = tail;
+			tail->next = temp; //and here
 		}
+		tail = temp; //changing a tail
+		tail->next = head; //cycle
+		head->prev = tail; //cycle
+		size++;
 	}
 	
 
 private:
 	size_t size;
 	ListNode<T> *head;
+	ListNode<T> *tail; //optional, but required for Queue
 };
 

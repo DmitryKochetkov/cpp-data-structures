@@ -8,5 +8,6 @@ public:
 	ListNode *prev;
 
 	ListNode(const T & data=T()): data(data), next(nullptr), prev(nullptr) {}
+	~ListNode() { } //TODO: destructor
 };
 
