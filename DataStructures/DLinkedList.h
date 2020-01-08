@@ -17,13 +17,12 @@ public:
 		
 		//Option 1
 		
-		/*
-		while (head) {
-			ListNode<T>* temp = head;
-			head = head->next;
-			delete temp;
+		
+		for (ListNode<T>* ptr = head; head; head = head->next)
+		{
+			delete ptr;
 		}
-		*/
+		
 		
 
 		//Option 2 (requires recursive destructor for ListNode)
@@ -78,6 +77,13 @@ public:
 		tail->next = head; //cycle
 		head->prev = tail; //cycle
 		size++;
+	}
+
+	void pop_front() {
+		head = head->next;
+		head->next->prev = tail;
+		tail->next = head;
+		size--;
 	}
 	
 
